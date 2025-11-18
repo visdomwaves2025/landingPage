@@ -3,9 +3,13 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+import dynamic from "next/dynamic";
 import { FiMenu, FiX, FiSearch, FiUser, FiChevronDown } from "react-icons/fi";
-import Search from "@/components/ui/Search";
+
+// Lazy load Search component
+const Search = dynamic(() => import("@/components/ui/Search"), {
+  ssr: false,
+});
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,14 +17,33 @@ const Header = () => {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // Throttled scroll handler for better performance
   useEffect(() => {
+    let rafId: number | null = null;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      if (rafId !== null) return;
+
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const shouldBeScrolled = scrollY > 100;
+
+        if (shouldBeScrolled !== isScrolled) {
+          setIsScrolled(shouldBeScrolled);
+        }
+
+        rafId = null;
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, [isScrolled]);
 
   const navigationItems = [
     { label: "INDUSTRIES", href: "/industries/education", hasMegaMenu: true },
@@ -34,142 +57,130 @@ const Header = () => {
 
   return (
     <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled
-            ? "bg-white shadow-md h-16"
-            : "bg-white/95 backdrop-blur-sm shadow-sm h-20"
-        }`}
+      <div
+        onMouseLeave={() => setActiveMenu(null)}
+        className="relative"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex items-center justify-between h-full">
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-2">
-              <Image
-                src="/logos/VW_WB.png"
-                alt="VisdomWaves Logo"
-                width={36}
-                height={36}
-                className="w-9 h-9"
-              />
-              <div className="text-2xl font-display font-bold">
-                <span className="text-primary-navy">Visdom</span>
-                <span className="text-primary-blue">Waves</span>
-              </div>
-            </Link>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <div
-                  key={item.label}
-                  className="relative group"
-                  onMouseEnter={() => item.hasMegaMenu && setActiveMenu(item.label)}
-                  onMouseLeave={() => setActiveMenu(null)}
-                >
-                  <Link
-                    href={item.href}
-                    className="flex items-center text-sm font-semibold text-neutral-700 hover:text-primary-blue transition-colors tracking-wide"
-                  >
-                    {item.label}
-                    {item.hasMegaMenu && (
-                      <FiChevronDown className="ml-1 w-4 h-4" />
-                    )}
-                  </Link>
-                  {item.hasMegaMenu && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
-                  )}
+        <header
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+            isScrolled
+              ? "bg-white shadow-md h-16"
+              : "bg-white/95 backdrop-blur-sm shadow-sm h-20"
+          }`}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+            <div className="flex items-center justify-between h-full">
+              {/* Logo */}
+              <Link href="/" className="flex items-center space-x-2">
+                <Image
+                  src="/logos/VW_WB.png"
+                  alt="VisdomWaves Logo"
+                  width={36}
+                  height={36}
+                  className="w-9 h-9"
+                />
+                <div className="text-2xl font-display font-bold">
+                  <span className="text-primary-navy">Visdom</span>
+                  <span className="text-primary-blue">Waves</span>
                 </div>
-              ))}
-            </nav>
+              </Link>
 
-            {/* Right Actions */}
-            <div className="hidden lg:flex items-center space-x-4">
+              {/* Desktop Navigation */}
+              <nav className="hidden lg:flex items-center space-x-8">
+                {navigationItems.map((item) => (
+                  <div
+                    key={item.label}
+                    className="relative group"
+                    onMouseEnter={() => item.hasMegaMenu && setActiveMenu(item.label)}
+                  >
+                    <Link
+                      href={item.href}
+                      className="flex items-center text-sm font-semibold text-neutral-700 hover:text-primary-blue transition-colors tracking-wide"
+                    >
+                      {item.label}
+                      {item.hasMegaMenu && (
+                        <FiChevronDown className="ml-1 w-4 h-4" />
+                      )}
+                    </Link>
+                    {item.hasMegaMenu && (
+                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 origin-left" />
+                    )}
+                  </div>
+                ))}
+              </nav>
+
+              {/* Right Actions */}
+              <div className="hidden lg:flex items-center space-x-4">
+                <button
+                  onClick={() => setIsSearchOpen(true)}
+                  className="p-2 text-neutral-700 hover:text-primary-blue transition-colors"
+                  aria-label="Search"
+                >
+                  <FiSearch className="w-5 h-5" />
+                </button>
+                <button className="flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-neutral-700 hover:text-primary-blue transition-colors">
+                  <FiUser className="w-4 h-4" />
+                  <span>CLIENT LOGIN</span>
+                </button>
+              </div>
+
+              {/* Mobile Menu Button */}
               <button
-                onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-neutral-700 hover:text-primary-blue transition-colors"
-                aria-label="Search"
+                className="lg:hidden p-2 text-neutral-700"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                aria-label="Toggle menu"
               >
-                <FiSearch className="w-5 h-5" />
-              </button>
-              <button className="flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-neutral-700 hover:text-primary-blue transition-colors">
-                <FiUser className="w-4 h-4" />
-                <span>CLIENT LOGIN</span>
+                {isMobileMenuOpen ? (
+                  <FiX className="w-6 h-6" />
+                ) : (
+                  <FiMenu className="w-6 h-6" />
+                )}
               </button>
             </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="lg:hidden p-2 text-neutral-700"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle menu"
-            >
-              {isMobileMenuOpen ? (
-                <FiX className="w-6 h-6" />
-              ) : (
-                <FiMenu className="w-6 h-6" />
-              )}
-            </button>
           </div>
-        </div>
 
-        {/* Mega Menu Dropdown */}
-        <AnimatePresence>
+          {/* Mega Menu Dropdown */}
           {activeMenu && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="absolute top-full left-0 right-0 bg-white shadow-2xl"
-              onMouseEnter={() => setActiveMenu(activeMenu)}
-              onMouseLeave={() => setActiveMenu(null)}
-            >
+            <div className="absolute top-full left-0 right-0 bg-white shadow-2xl animate-fadeIn">
               {activeMenu === "INDUSTRIES" && <IndustriesMegaMenu />}
               {activeMenu === "SERVICES" && <ServicesMegaMenu />}
               {activeMenu === "PRODUCTS" && <ProductsMegaMenu />}
               {activeMenu === "BLOG" && <BlogMegaMenu />}
               {activeMenu === "ABOUT US" && <AboutMegaMenu />}
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
-      </header>
+        </header>
+      </div>
 
       {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 bg-white lg:hidden overflow-y-auto"
-            style={{ top: isScrolled ? "4rem" : "5rem" }}
-          >
-            <div className="p-6 space-y-4">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href}
-                  className="block text-lg font-semibold text-neutral-800 hover:text-primary-blue transition-colors py-3 border-b border-neutral-200"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              ))}
-              <div className="pt-6 space-y-4">
-                <button className="w-full px-4 py-3 bg-primary-blue text-white font-semibold rounded-lg hover:bg-primary-navy transition-colors">
-                  CLIENT LOGIN
-                </button>
-                <div className="text-center text-sm text-neutral-600">
-                  <p>Contact: +91 7997755133</p>
-                  <p>Email: info@visdomwavess.com</p>
-                </div>
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-white lg:hidden overflow-y-auto animate-slideIn"
+          style={{ top: isScrolled ? "4rem" : "5rem" }}
+        >
+          <div className="p-6 space-y-4">
+            {navigationItems.map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="block text-lg font-semibold text-neutral-800 hover:text-primary-blue transition-colors py-3 border-b border-neutral-200"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <div className="pt-6 space-y-4">
+              <button className="w-full px-4 py-3 bg-primary-blue text-white font-semibold rounded-lg hover:bg-primary-navy transition-colors">
+                CLIENT LOGIN
+              </button>
+              <div className="text-center text-sm text-neutral-600">
+                <p>Contact: +91 7997755133</p>
+                <p>Email: info@visdomwavess.com</p>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
 
       {/* Search Overlay */}
       <Search isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />

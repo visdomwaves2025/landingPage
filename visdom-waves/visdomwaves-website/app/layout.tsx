@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { GoogleAnalytics } from "@/lib/analytics";
+import { PageLoaderProvider } from "@/components/ui/PageLoader";
 
 export const metadata: Metadata = {
   title: "VisdomWaves Innovations | AI-Driven Solutions & Digital Transformation",
@@ -62,7 +63,7 @@ export default function RootLayout({
         {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
           <GoogleAnalytics GA_MEASUREMENT_ID={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
         )}
-        {children}
+        <PageLoaderProvider>{children}</PageLoaderProvider>
       </body>
     </html>
   );

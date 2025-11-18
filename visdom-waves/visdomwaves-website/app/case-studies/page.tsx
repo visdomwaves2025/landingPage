@@ -46,106 +46,168 @@ export default function CaseStudiesPage() {
         </section>
 
         {/* Live Product Showcase */}
-        <section className="py-20 bg-white">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
+        <section className="py-24 bg-gradient-to-b from-white via-neutral-50/50 to-white relative overflow-hidden">
+          {/* Decorative background elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-primary-blue/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-purple/5 rounded-full blur-3xl"></div>
+          </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center mb-16">
+              <div className="inline-block mb-4">
+                <span className="px-4 py-2 bg-primary-blue/10 text-primary-blue rounded-full text-sm font-semibold">
+                  Live & Operational
+                </span>
+              </div>
               <h2 className="text-display-sm font-heading text-primary-navy mb-4">
                 Our Live Product
               </h2>
-              <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
+              <p className="text-xl text-neutral-600 max-w-3xl mx-auto leading-relaxed">
                 Real, working solutions you can try right now
               </p>
             </div>
 
-            {/* EduWave Platform Card */}
-            <div className="card border-2 border-primary-blue/20 hover:shadow-2xl transition-all max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="space-y-6">
-                  <div className="flex items-center space-x-3">
-                    <div className="p-3 bg-gradient-to-br from-primary-blue to-primary-purple rounded-xl">
-                      <FiCode className="w-8 h-8 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="text-heading-xl font-heading text-primary-navy">
-                        EduWave Platform
-                      </h3>
-                      <span className="text-sm text-green-600 font-semibold">✓ Live & Operational</span>
-                    </div>
-                  </div>
-
-                  <p className="text-neutral-600 text-lg leading-relaxed">
-                    AI-powered Learning Management System designed for modern educational institutions.
-                    Built from the ground up with scalability, personalization, and user experience in mind.
-                  </p>
-
-                  <div className="space-y-3">
-                    <h4 className="font-semibold text-primary-navy">Key Features</h4>
-                    <ul className="space-y-2">
-                      {[
-                        "Personalized learning paths with AI recommendations",
-                        "Real-time analytics and progress tracking",
-                        "Interactive course creation tools",
-                        "Seamless integration capabilities",
-                        "Mobile-responsive design",
-                        "Cloud-based infrastructure"
-                      ].map((feature, idx) => (
-                        <li key={idx} className="flex items-start text-neutral-700">
-                          <span className="w-1.5 h-1.5 bg-primary-blue rounded-full mr-3 mt-2 flex-shrink-0"></span>
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    {["AI/ML", "EdTech", "React", "Next.js", "Cloud-Based", "TypeScript"].map((tag, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 bg-primary-blue/10 text-primary-blue rounded-full text-sm font-semibold"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-br from-primary-blue to-primary-purple rounded-xl p-8 text-white flex flex-col justify-between">
-                  <div>
-                    <h4 className="text-2xl font-heading font-bold mb-4">
-                      Try It Live
-                    </h4>
-                    <p className="text-white/90 mb-6">
-                      Experience our EdTech platform firsthand. See the interface,
-                      explore features, and understand the user experience we deliver.
-                    </p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="bg-white/10 backdrop-blur-lg rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-semibold">Development</span>
-                        <span className="text-sm">100%</span>
+            {/* EduWave Platform Card - Redesigned */}
+            <div className="relative group">
+              {/* Glow effect on hover */}
+              <div className="absolute -inset-1 bg-gradient-to-r from-primary-blue via-brand-vibrantTeal to-primary-purple rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-opacity duration-500"></div>
+              
+              <div className="relative bg-white rounded-3xl shadow-xl border border-neutral-100 overflow-hidden">
+                {/* Top accent bar */}
+                <div className="h-1.5 bg-gradient-to-r from-primary-blue via-brand-vibrantTeal to-primary-purple"></div>
+                
+                <div className="p-8 lg:p-12">
+                  <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+                    {/* Left Section - Product Info */}
+                    <div className="lg:col-span-3 space-y-8">
+                      {/* Header */}
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <div className="p-4 bg-gradient-to-br from-primary-blue via-primary-purple to-brand-vibrantTeal rounded-2xl shadow-lg transform group-hover:scale-105 transition-transform duration-300">
+                          <FiCode className="w-10 h-10 text-white" />
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-3xl lg:text-4xl font-heading text-primary-navy mb-2">
+                            EduWave Platform
+                          </h3>
+                          <div className="flex items-center gap-2">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 rounded-full text-sm font-semibold border border-green-200">
+                              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                              Live & Operational
+                            </span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="h-2 bg-white/20 rounded-full overflow-hidden">
-                        <div className="h-full bg-brand-vibrantTeal rounded-full" style={{width: '100%'}}></div>
+
+                      {/* Description */}
+                      <div className="prose prose-lg max-w-none">
+                        <p className="text-neutral-700 text-lg leading-relaxed">
+                          AI-powered Learning Management System designed for modern educational institutions.
+                          Built from the ground up with <span className="font-semibold text-primary-navy">scalability</span>, 
+                          <span className="font-semibold text-primary-navy"> personalization</span>, and 
+                          <span className="font-semibold text-primary-navy"> user experience</span> in mind.
+                        </p>
+                      </div>
+
+                      {/* Key Features */}
+                      <div className="space-y-4">
+                        <h4 className="text-xl font-heading text-primary-navy font-semibold">Key Features</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {[
+                            "Personalized learning paths with AI recommendations",
+                            "Real-time analytics and progress tracking",
+                            "Interactive course creation tools",
+                            "Seamless integration capabilities",
+                            "Mobile-responsive design",
+                            "Cloud-based infrastructure"
+                          ].map((feature, idx) => (
+                            <div key={idx} className="flex items-start gap-3 p-3 rounded-lg hover:bg-primary-blue/5 transition-colors group/feature">
+                              <div className="mt-1 flex-shrink-0">
+                                <div className="w-2 h-2 bg-gradient-to-br from-primary-blue to-brand-vibrantTeal rounded-full group-hover/feature:scale-125 transition-transform"></div>
+                              </div>
+                              <span className="text-neutral-700 text-sm leading-relaxed">{feature}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Technology Tags */}
+                      <div className="flex flex-wrap gap-2 pt-4 border-t border-neutral-200">
+                        {["AI/ML", "EdTech", "React", "Next.js", "Cloud-Based", "TypeScript"].map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="px-4 py-2 bg-gradient-to-br from-primary-blue/10 to-primary-purple/10 text-primary-blue rounded-lg text-sm font-semibold border border-primary-blue/20 hover:border-primary-blue/40 hover:shadow-md transition-all"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     </div>
 
-                    <Link
-                      href="https://visdom-wave-main-iu5j.vercel.app/"
-                      target="_blank"
-                      className="btn-primary bg-white text-primary-blue hover:bg-neutral-100 w-full text-center inline-flex items-center justify-center"
-                    >
-                      <FiPlay className="mr-2" />
-                      Launch Live Demo
-                    </Link>
+                    {/* Right Section - CTA & Demo */}
+                    <div className="lg:col-span-2">
+                      <div className="relative h-full bg-gradient-to-br from-primary-blue via-primary-purple to-brand-vibrantTeal rounded-2xl p-8 text-white overflow-hidden">
+                        {/* Decorative pattern */}
+                        <div className="absolute inset-0 opacity-10">
+                          <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full -mr-32 -mt-32"></div>
+                          <div className="absolute bottom-0 left-0 w-48 h-48 bg-white rounded-full -ml-24 -mb-24"></div>
+                        </div>
+                        
+                        <div className="relative z-10 h-full flex flex-col justify-between">
+                          <div>
+                            <div className="inline-flex items-center gap-2 mb-6">
+                              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                              <span className="text-sm font-semibold uppercase tracking-wider">Live Demo</span>
+                            </div>
+                            <h4 className="text-3xl font-heading font-bold mb-4">
+                              Try It Live
+                            </h4>
+                            <p className="text-white/90 text-lg leading-relaxed mb-8">
+                              Experience our EdTech platform firsthand. See the interface,
+                              explore features, and understand the user experience we deliver.
+                            </p>
+                          </div>
 
-                    <Link
-                      href="/products/edtech-platform"
-                      className="btn-outline border-white text-white hover:bg-white hover:text-primary-blue w-full text-center"
-                    >
-                      View Full Details
-                    </Link>
+                          <div className="space-y-5">
+                            {/* Progress Indicator */}
+                            <div className="bg-white/15 backdrop-blur-md rounded-xl p-5 border border-white/20">
+                              <div className="flex items-center justify-between mb-3">
+                                <span className="text-sm font-semibold uppercase tracking-wider">Development Status</span>
+                                <span className="text-lg font-bold">100%</span>
+                              </div>
+                              <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+                                <div 
+                                  className="h-full bg-gradient-to-r from-green-400 to-brand-vibrantTeal rounded-full shadow-lg"
+                                  style={{width: '100%'}}
+                                ></div>
+                              </div>
+                              <p className="text-white/70 text-xs mt-2">Production Ready</p>
+                            </div>
+
+                            {/* Action Buttons */}
+                            <div className="space-y-3">
+                              <Link
+                                href="https://visdom-wave-main-iu5j.vercel.app/"
+                                target="_blank"
+                                className="group/btn block w-full bg-white text-primary-blue hover:bg-neutral-50 rounded-xl px-6 py-4 text-center font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                              >
+                                <span className="inline-flex items-center justify-center gap-2">
+                                  <FiPlay className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                                  Launch Live Demo
+                                </span>
+                              </Link>
+
+                              <Link
+                                href="/products/edtech-platform"
+                                className="block w-full bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 rounded-xl px-6 py-4 text-center font-semibold transition-all duration-300 hover:border-white/50"
+                              >
+                                View Full Details
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
