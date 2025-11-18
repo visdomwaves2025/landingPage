@@ -80,7 +80,7 @@ export function validateContactForm(data: unknown) {
   const result = contactFormSchema.safeParse(data)
 
   if (!result.success) {
-    const errors = result.error.errors.map((err) => ({
+    const errors = result.error.issues.map((err) => ({
       field: err.path.join('.'),
       message: err.message,
     }))
@@ -104,7 +104,7 @@ export function validateNewsletter(data: unknown) {
   const result = newsletterSchema.safeParse(data)
 
   if (!result.success) {
-    const errors = result.error.errors.map((err) => ({
+    const errors = result.error.issues.map((err) => ({
       field: err.path.join('.'),
       message: err.message,
     }))
