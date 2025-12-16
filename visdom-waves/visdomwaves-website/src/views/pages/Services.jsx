@@ -131,7 +131,7 @@ export default function ServicesPage() {
                         alt={heroImages.services.alt}
                         className="object-cover w-full h-full"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-navy/90 to-primary-blue/90"></div>
+
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

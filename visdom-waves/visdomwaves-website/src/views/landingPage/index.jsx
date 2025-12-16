@@ -41,7 +41,7 @@ export default function Home() {
                             alt={heroImages.home.alt}
                             className="object-cover w-full h-full"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-br from-primary-navy/90 via-primary-blue/85 to-primary-purple/90"></div>
+
                     </div>
 
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
