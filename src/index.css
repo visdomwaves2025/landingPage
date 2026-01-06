@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom scrollbar and performance utilities */
+/* Glassmorphism Utilities */
+@layer utilities {
+  .glass {
+    @apply bg-brand-glass backdrop-blur-md border border-white/10 shadow-lg;
+  }
+
+  .glass-card {
+    @apply bg-brand-charcoal/80 backdrop-blur-lg border border-white/5 shadow-xl transition-all duration-300 hover:border-primary-blue/30 hover:shadow-primary-blue/20 hover:-translate-y-1;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-blue to-primary-purple;
+  }
+
+  .btn-glow {
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+    transition: box-shadow 0.3s ease;
+  }
+
+  .btn-glow:hover {
+    box-shadow: 0 0 25px rgba(100, 255, 218, 0.5);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Base styles */
+@layer base {
+  body {
+    @apply font-body text-primary-navy bg-white antialiased selection:bg-primary-blue selection:text-white;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-primary-navy;
+  }
+}
+
+@keyframes loaderGlow {
+  0% {
+    opacity: 0.35;
+    box-shadow: 0 0 5px rgba(37, 99, 235, 0.2);
+  }
+
+  100% {
+    opacity: 0.65;
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6);
+  }
+}
+
+@keyframes loaderPulse {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+
+  50% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: scale(0.85);
+    opacity: 0.4;
+  }
+}
+
+@keyframes loaderOrbit {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loaderShimmer {
+  0% {
+    background-position: 200% 0;
+    opacity: 0;
+  }
+
+  30% {
+    opacity: 0.6;
+  }
+
+  100% {
+    background-position: -50% 0;
+    opacity: 0;
+  }
+}
+
+@keyframes loaderTrack {
+  0% {
+    transform: translateX(-50%);
+    width: 15%;
+  }
+
+  50% {
+    transform: translateX(35%);
+    width: 55%;
+  }
+
+  100% {
+    transform: translateX(110%);
+    width: 25%;
+  }
+}
+
+/* Custom components */
+@layer components {
+  .btn-primary {
+    @apply bg-primary-blue hover:bg-primary-navy text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300 transform hover:scale-105;
+  }
+
+  .btn-secondary {
+    @apply bg-primary-purple hover:bg-primary-navy text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary-blue text-primary-blue hover:bg-primary-blue hover:text-white font-semibold px-6 py-3 rounded-lg transition-all duration-300;
+  }
+
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-2xl;
+  }
+
+  .mega-menu {
+    @apply absolute top-full left-0 w-full bg-white shadow-2xl opacity-0 invisible transition-all duration-300 group-hover:opacity-100 group-hover:visible;
+  }
+
+  /* Ensure floating assistant is always visible and fixed to viewport */
+  [data-floating-assistant="button"] {
+    position: fixed !important;
+    z-index: 9999 !important;
+  }
+
+  [data-floating-assistant="panel"] {
+    position: fixed !important;
+    z-index: 99999 !important;
+  }
+}
